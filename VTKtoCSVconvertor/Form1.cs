@@ -12,6 +12,8 @@ namespace VTKtoCSVconvertor
 {
     public partial class coverterProgramm : Form , FormObserver
     {
+        private const string POINT_NUMBER_MESSAGE = "Выберите количество выходных точек от 2 до ";
+
         private Converter converter;
 
         public coverterProgramm()
@@ -33,6 +35,22 @@ namespace VTKtoCSVconvertor
                 pointsNumberStatusLabel.Text = "Введены некорректные данные.\nПожалуйста, повторите попытку";
             else
                 pointsNumberStatusLabel.Text = "";
+        }
+
+        public void updatePointsNumberMessage()
+        {
+            if (converter.getMaxNumberOfPoints() != -1)
+                poinsNumberLabel.Text = POINT_NUMBER_MESSAGE + converter.getMaxNumberOfPoints();
+            else
+                poinsNumberLabel.Text = POINT_NUMBER_MESSAGE;
+        }
+
+        public void updateOutNameStatus()
+        {
+            if (converter.getTargetName().Equals("-"))
+                csvNameStatusLabel.Text = "Введено некорректное имя файла.\nНазвание должно содержать только\nбуквы латинского алфавита";
+            else
+                csvNameStatusLabel.Text = "";
         }
 
         private void exitButton_Click(object sender, EventArgs e)
@@ -60,6 +78,16 @@ namespace VTKtoCSVconvertor
                 numberOfPoints = -1;
             }
             converter.setNumberOfPoints(numberOfPoints);
+
+            converter.setTargetName(csvNameTextBox.Text);
+        }
+
+        private void beginCancelButton_Click(object sender, EventArgs e)
+        {
+            if (converter.getMaxNumberOfPoints() != -1)
+            {
+                converter.convertAsync();
+            }
         }
     }
 }

@@ -50,9 +50,9 @@
             // 
             // progressBar1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(12, 96);
+            this.progressBar1.Location = new System.Drawing.Point(12, 128);
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(567, 23);
+            this.progressBar1.Size = new System.Drawing.Size(613, 23);
             this.progressBar1.TabIndex = 0;
             // 
             // csvNameTextBox
@@ -66,7 +66,7 @@
             // progressNameLabel
             // 
             this.progressNameLabel.AutoSize = true;
-            this.progressNameLabel.Location = new System.Drawing.Point(12, 80);
+            this.progressNameLabel.Location = new System.Drawing.Point(12, 112);
             this.progressNameLabel.Name = "progressNameLabel";
             this.progressNameLabel.Size = new System.Drawing.Size(62, 13);
             this.progressNameLabel.TabIndex = 2;
@@ -75,7 +75,7 @@
             // progressStatusLabel
             // 
             this.progressStatusLabel.AutoSize = true;
-            this.progressStatusLabel.Location = new System.Drawing.Point(74, 80);
+            this.progressStatusLabel.Location = new System.Drawing.Point(74, 112);
             this.progressStatusLabel.Name = "progressStatusLabel";
             this.progressStatusLabel.Size = new System.Drawing.Size(138, 13);
             this.progressStatusLabel.TabIndex = 3;
@@ -86,7 +86,7 @@
             this.progressPercentLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.progressPercentLabel.AutoSize = true;
             this.progressPercentLabel.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.progressPercentLabel.Location = new System.Drawing.Point(546, 80);
+            this.progressPercentLabel.Location = new System.Drawing.Point(595, 112);
             this.progressPercentLabel.Name = "progressPercentLabel";
             this.progressPercentLabel.Size = new System.Drawing.Size(21, 13);
             this.progressPercentLabel.TabIndex = 4;
@@ -116,17 +116,18 @@
             // beginCancelButton
             // 
             this.beginCancelButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold);
-            this.beginCancelButton.Location = new System.Drawing.Point(12, 125);
+            this.beginCancelButton.Location = new System.Drawing.Point(12, 157);
             this.beginCancelButton.Name = "beginCancelButton";
             this.beginCancelButton.Size = new System.Drawing.Size(133, 38);
             this.beginCancelButton.TabIndex = 7;
             this.beginCancelButton.Text = "Конвертировать";
             this.beginCancelButton.UseVisualStyleBackColor = true;
+            this.beginCancelButton.Click += new System.EventHandler(this.beginCancelButton_Click);
             // 
             // exitButton
             // 
             this.exitButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.exitButton.Location = new System.Drawing.Point(446, 125);
+            this.exitButton.Location = new System.Drawing.Point(492, 155);
             this.exitButton.Name = "exitButton";
             this.exitButton.Size = new System.Drawing.Size(133, 38);
             this.exitButton.TabIndex = 8;
@@ -165,7 +166,7 @@
             this.aboutButton.Enabled = false;
             this.aboutButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.aboutButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.aboutButton.Location = new System.Drawing.Point(220, 125);
+            this.aboutButton.Location = new System.Drawing.Point(220, 157);
             this.aboutButton.Name = "aboutButton";
             this.aboutButton.Size = new System.Drawing.Size(133, 38);
             this.aboutButton.TabIndex = 12;
@@ -196,7 +197,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(591, 171);
+            this.ClientSize = new System.Drawing.Size(637, 205);
             this.Controls.Add(this.csvNameStatusLabel);
             this.Controls.Add(this.pointsNumberStatusLabel);
             this.Controls.Add(this.aboutButton);
