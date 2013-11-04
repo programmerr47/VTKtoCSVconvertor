@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.csvNameTextBox = new System.Windows.Forms.TextBox();
             this.progressNameLabel = new System.Windows.Forms.Label();
@@ -41,6 +42,10 @@
             this.pointsNumberTextBox = new System.Windows.Forms.TextBox();
             this.poinsNumberLabel = new System.Windows.Forms.Label();
             this.aboutButton = new System.Windows.Forms.Button();
+            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.checkingDataCorrect = new System.Windows.Forms.Timer(this.components);
+            this.pointsNumberStatusLabel = new System.Windows.Forms.Label();
+            this.csvNameStatusLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // progressBar1
@@ -97,6 +102,7 @@
             this.vtkOpenButton.TabIndex = 5;
             this.vtkOpenButton.Text = "Открыть vtk";
             this.vtkOpenButton.UseVisualStyleBackColor = true;
+            this.vtkOpenButton.Click += new System.EventHandler(this.vtkOpenButton_Click);
             // 
             // vtkStatusLabel
             // 
@@ -126,6 +132,7 @@
             this.exitButton.TabIndex = 8;
             this.exitButton.Text = "Выход";
             this.exitButton.UseVisualStyleBackColor = true;
+            this.exitButton.Click += new System.EventHandler(this.exitButton_Click);
             // 
             // csvNameLabel
             // 
@@ -165,11 +172,33 @@
             this.aboutButton.Text = "О программе";
             this.aboutButton.UseVisualStyleBackColor = true;
             // 
+            // checkingDataCorrect
+            // 
+            this.checkingDataCorrect.Tick += new System.EventHandler(this.checkingDataCorrect_Tick);
+            // 
+            // pointsNumberStatusLabel
+            // 
+            this.pointsNumberStatusLabel.AutoSize = true;
+            this.pointsNumberStatusLabel.Location = new System.Drawing.Point(148, 50);
+            this.pointsNumberStatusLabel.Name = "pointsNumberStatusLabel";
+            this.pointsNumberStatusLabel.Size = new System.Drawing.Size(0, 13);
+            this.pointsNumberStatusLabel.TabIndex = 13;
+            // 
+            // csvNameStatusLabel
+            // 
+            this.csvNameStatusLabel.AutoSize = true;
+            this.csvNameStatusLabel.Location = new System.Drawing.Point(443, 50);
+            this.csvNameStatusLabel.Name = "csvNameStatusLabel";
+            this.csvNameStatusLabel.Size = new System.Drawing.Size(0, 13);
+            this.csvNameStatusLabel.TabIndex = 14;
+            // 
             // coverterProgramm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(591, 171);
+            this.Controls.Add(this.csvNameStatusLabel);
+            this.Controls.Add(this.pointsNumberStatusLabel);
             this.Controls.Add(this.aboutButton);
             this.Controls.Add(this.poinsNumberLabel);
             this.Controls.Add(this.pointsNumberTextBox);
@@ -205,6 +234,10 @@
         private System.Windows.Forms.TextBox pointsNumberTextBox;
         private System.Windows.Forms.Label poinsNumberLabel;
         private System.Windows.Forms.Button aboutButton;
+        private System.Windows.Forms.OpenFileDialog openFileDialog;
+        private System.Windows.Forms.Timer checkingDataCorrect;
+        private System.Windows.Forms.Label pointsNumberStatusLabel;
+        private System.Windows.Forms.Label csvNameStatusLabel;
     }
 }
 

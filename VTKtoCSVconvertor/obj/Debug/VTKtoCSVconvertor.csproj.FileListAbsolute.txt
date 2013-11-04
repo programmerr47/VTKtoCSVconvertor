@@ -1,1 +1,10 @@
 C:\Users\Mikl\documents\visual studio 2012\Projects\VTKtoCSVconvertor\VTKtoCSVconvertor\bin\Debug\VTKtoCSVconvertor.exe.config
+C:\Users\Mikl\documents\visual studio 2012\Projects\testgit\VTKtoCSVconvertor\VTKtoCSVconvertor\bin\Debug\VTKtoCSVconvertor.exe.config
+C:\Users\Mikl\documents\visual studio 2012\Projects\testgit\VTKtoCSVconvertor\VTKtoCSVconvertor\bin\Debug\VTKtoCSVconvertor.exe
+C:\Users\Mikl\documents\visual studio 2012\Projects\testgit\VTKtoCSVconvertor\VTKtoCSVconvertor\bin\Debug\VTKtoCSVconvertor.pdb
+C:\Users\Mikl\documents\visual studio 2012\Projects\testgit\VTKtoCSVconvertor\VTKtoCSVconvertor\obj\Debug\VTKtoCSVconvertor.csprojResolveAssemblyReference.cache
+C:\Users\Mikl\documents\visual studio 2012\Projects\testgit\VTKtoCSVconvertor\VTKtoCSVconvertor\obj\Debug\VTKtoCSVconvertor.coverterProgramm.resources
+C:\Users\Mikl\documents\visual studio 2012\Projects\testgit\VTKtoCSVconvertor\VTKtoCSVconvertor\obj\Debug\VTKtoCSVconvertor.Properties.Resources.resources
+C:\Users\Mikl\documents\visual studio 2012\Projects\testgit\VTKtoCSVconvertor\VTKtoCSVconvertor\obj\Debug\VTKtoCSVconvertor.csproj.GenerateResource.Cache
+C:\Users\Mikl\documents\visual studio 2012\Projects\testgit\VTKtoCSVconvertor\VTKtoCSVconvertor\obj\Debug\VTKtoCSVconvertor.exe
+C:\Users\Mikl\documents\visual studio 2012\Projects\testgit\VTKtoCSVconvertor\VTKtoCSVconvertor\obj\Debug\VTKtoCSVconvertor.pdb
