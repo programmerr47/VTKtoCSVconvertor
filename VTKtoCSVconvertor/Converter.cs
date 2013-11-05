@@ -18,10 +18,6 @@ namespace VTKtoCSVconvertor
         private string targetName;
         private string path;
 
-        private int[] oneDimension;
-        private int[] twoDimension;
-        private int[] threeDimension;
-
         private static Converter instance;
         private FormObserver observer;
 
@@ -52,7 +48,7 @@ namespace VTKtoCSVconvertor
         {
             StreamReader file = new StreamReader(wholePath);
             string line;
-            while (!((line = file.ReadLine()).Contains("DIMENSIONS"))) ;
+            while (!(((line = file.ReadLine()) == null) || line.Contains("DIMENSIONS"))) ;
             line = line.Substring(line.IndexOf("DIMENSIONS") + 11);
             string[] strNumbers = line.Split(' ');
             int minNumber = Int32.Parse(strNumbers[0]);
@@ -123,58 +119,52 @@ namespace VTKtoCSVconvertor
 
         public void convert()
         {
-            int[] numbers = getRandNumbers();
-            Array.Sort(numbers);
+            Number[] numbers = getRandNumbers();
+            Array.Sort(numbers, NumberComparator.compareNumber);
+
+            StreamReader file = new StreamReader(path + "\\" + sourceName);
+            StreamWriter outfile = new StreamWriter(path + "\\" + targetName);
+            string line;
+            while (!StringsUtils.numberString((line = file.ReadLine()))) ;
+
+            file.Close();
+            outfile.Close();
         }
 
-        private int[] getRandNumbers()
+        private Number[] getRandNumbers()
         {
+            Number[] result = new Number[numberOfPoints];
             Random random = new Random();
-            int[] result = new int[numberOfPoints];
-            oneDimension = getOneDimensionRandNumbers(random);
-            for (int i = 0; i < result.Length; i++)
-            {
-                result[i] = oneDimension[i];
-            }
-            twoDimension = getOneDimensionRandNumbers(random);
-            for (int i = 0; i < result.Length; i++)
-            {
-                result[i] += twoDimension[i] * numberOfPoints;
-            }
+            int randNumber = -1;
 
-            threeDimension = getOneDimensionRandNumbers(random);
-            for (int i = 0; i < result.Length; i++)
+            for (int i = 0; i < numberOfPoints; i++)
             {
-                result[i] += threeDimension[i] * numberOfPoints * numberOfPoints;
-            } 
+                result[i] = new Number();
+                result[i].x = getOneDimensionRandNumber(random, i, result, Number.X);
+                result[i].y = getOneDimensionRandNumber(random, i, result, Number.Y);
+                result[i].z = getOneDimensionRandNumber(random, i, result, Number.Z);
+                result[i].generateNumber(maxNumberOfPoints);
+            }
 
             return result;
         }
 
-        private int[] getOneDimensionRandNumbers(Random random)
+        private int getOneDimensionRandNumber(Random random, int currentIndex, Number[] array, int coord)
         {
-            int[] oneDimension = new int[numberOfPoints];
+            bool notEqual = false;
             int randNumber = -1;
-            bool notEqual;
-
-            for (int i = 0; i < numberOfPoints; i++)
+            while (!notEqual)
             {
-                notEqual = false;
-                while (!notEqual)
+                randNumber = random.Next(0, maxNumberOfPoints);
+                notEqual = true;
+                for (int j = 0; j < currentIndex; j++)
                 {
-                    randNumber = random.Next(0, maxNumberOfPoints);
-                    notEqual = true;
-                    for (int j = 0; j < i; j++)
-                    {
-                        if (randNumber == oneDimension[j])
-                            notEqual = false;
-                    }
+                    if (randNumber == array[j].getCoord(coord))
+                        notEqual = false;
                 }
-
-                oneDimension[i] = randNumber;
             }
 
-            return oneDimension;
+            return randNumber;
         }
     }
 }
