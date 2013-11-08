@@ -18,6 +18,9 @@ namespace VTKtoCSVconvertor
         private string targetName;
         private string path;
 
+        private string convertStatus = "";
+        private double progress;
+
         private static Converter instance;
         private FormObserver observer;
 
@@ -119,16 +122,64 @@ namespace VTKtoCSVconvertor
 
         public void convert()
         {
+            progress = 0;
+            observer.updateProgress();
             Number[] numbers = getRandNumbers();
             Array.Sort(numbers, NumberComparator.compareNumber);
+            progress = 10;
+            double progressStep = (100 - progress) / maxNumberOfPoints;
+            observer.updateProgress();
 
             StreamReader file = new StreamReader(path + "\\" + sourceName);
-            StreamWriter outfile = new StreamWriter(path + "\\" + targetName);
+            StreamWriter outFile = new StreamWriter(path + "\\" + targetName);
+
             string line;
-            while (!StringsUtils.numberString((line = file.ReadLine()))) ;
+            string outLine = null;
+            int xStep = 1;
+            int yStep = 1;
+            int zStep = 1;
+            int index = 0;
+            int numberIndex = 0;
+            string[] strNum;
+
+            while ((line = file.ReadLine()) != null)
+            {
+                if (line.Contains("SPACING"))
+                {
+                    line = line.Substring(line.IndexOf("SPACING") + 8);
+                    strNum = line.Split(' ');
+                    try
+                    {
+                        xStep = Int32.Parse(strNum[0]);
+                        yStep = Int32.Parse(strNum[1]);
+                        zStep = Int32.Parse(strNum[2]);
+                    }
+                    catch (Exception e)
+                    {
+                    }
+                }
+                else if (StringsUtils.numberString(line))
+                {
+                    strNum = line.Split(' ');
+                    for (int i = 0; i < strNum.Length / 3; i++)
+                    {
+                        if (numbers[numberIndex].number == index)
+                        {
+                            outLine = StringsUtils.generateCSVString(numbers[numberIndex], strNum[i], strNum[i + 1], strNum[i + 2]);
+                            outFile.WriteLine(outLine);
+                            numberIndex++;
+                            progress += progressStep;
+                            observer.updateProgress();
+                        }
+                        index++;
+                    }
+                }
+            }
 
             file.Close();
-            outfile.Close();
+            outFile.Close();
+            progress = 100;
+            observer.updateProgress();
         }
 
         private Number[] getRandNumbers()
@@ -165,6 +216,11 @@ namespace VTKtoCSVconvertor
             }
 
             return randNumber;
+        }
+
+        public double getProgress()
+        {
+            return progress;
         }
     }
 }

@@ -21,5 +21,10 @@ namespace VTKtoCSVconvertor
 
             return result;
         }
+
+        public static string generateCSVString(Number number, string Bx, string By, string Bz)
+        {
+            return number.x + ";" + number.y + ";" + number.z + ";" + Bx + ";" + By + ";" + Bz;
+        }
     }
 }

@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.converterProgressBar = new System.Windows.Forms.ProgressBar();
             this.csvNameTextBox = new System.Windows.Forms.TextBox();
             this.progressNameLabel = new System.Windows.Forms.Label();
             this.progressStatusLabel = new System.Windows.Forms.Label();
@@ -48,12 +48,12 @@
             this.csvNameStatusLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // progressBar1
+            // converterProgressBar
             // 
-            this.progressBar1.Location = new System.Drawing.Point(12, 128);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(613, 23);
-            this.progressBar1.TabIndex = 0;
+            this.converterProgressBar.Location = new System.Drawing.Point(12, 128);
+            this.converterProgressBar.Name = "converterProgressBar";
+            this.converterProgressBar.Size = new System.Drawing.Size(613, 23);
+            this.converterProgressBar.TabIndex = 0;
             // 
             // csvNameTextBox
             // 
@@ -212,7 +212,7 @@
             this.Controls.Add(this.progressStatusLabel);
             this.Controls.Add(this.progressNameLabel);
             this.Controls.Add(this.csvNameTextBox);
-            this.Controls.Add(this.progressBar1);
+            this.Controls.Add(this.converterProgressBar);
             this.Name = "coverterProgramm";
             this.Text = "Form1";
             this.ResumeLayout(false);
@@ -222,7 +222,7 @@
 
         #endregion
 
-        private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.ProgressBar converterProgressBar;
         private System.Windows.Forms.TextBox csvNameTextBox;
         private System.Windows.Forms.Label progressNameLabel;
         private System.Windows.Forms.Label progressStatusLabel;

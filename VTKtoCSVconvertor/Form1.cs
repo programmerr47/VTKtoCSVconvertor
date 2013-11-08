@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -51,6 +52,23 @@ namespace VTKtoCSVconvertor
                 csvNameStatusLabel.Text = "Введено некорректное имя файла.\nНазвание должно содержать только\nбуквы латинского алфавита";
             else
                 csvNameStatusLabel.Text = "";
+        }
+
+        public void updateProgress()
+        {
+            this.Invoke(new ThreadStart(delegate
+            {
+                if (converter.getProgress() > 100)
+                {
+                    converterProgressBar.Value = 100;
+                    progressPercentLabel.Text = "100%";
+                }
+                else
+                {
+                    converterProgressBar.Value = (int)converter.getProgress();
+                    progressPercentLabel.Text = (int)converter.getProgress() + "%";
+                }
+            }));
         }
 
         private void exitButton_Click(object sender, EventArgs e)
