@@ -19,6 +19,7 @@ namespace VTKtoCSVconvertor
         private string path;
 
         private string convertStatus = "";
+        private bool converting = false;
         private double progress;
 
         private static Converter instance;
@@ -114,35 +115,45 @@ namespace VTKtoCSVconvertor
             observer.updateOutNameStatus();
         }
 
+        public void cancelConvert()
+        {
+            converting = false;
+        }
+
         public void convertAsync() 
         {
+            converting = true;
+            observer.updateButtonState();
             Thread t1 = new Thread(convert);
             t1.Start();
         }
 
         public void convert()
         {
+            convertStatus = "Подготовка начальных данных";
+            observer.updateProgressStatus();
             progress = 0;
             observer.updateProgress();
             Number[] numbers = getRandNumbers();
             Array.Sort(numbers, NumberComparator.compareNumber);
             progress = 10;
-            double progressStep = (100 - progress) / maxNumberOfPoints;
+            double progressStep = (100 - progress) / numberOfPoints;
             observer.updateProgress();
 
             StreamReader file = new StreamReader(path + "\\" + sourceName);
-            StreamWriter outFile = new StreamWriter(path + "\\" + targetName);
+            StreamWriter outFile = new StreamWriter(path + "\\" + targetName + ".csv");
 
             string line;
             string outLine = null;
             int xStep = 1;
             int yStep = 1;
             int zStep = 1;
+            int commonIndex = 1;
             int index = 0;
             int numberIndex = 0;
             string[] strNum;
 
-            while ((line = file.ReadLine()) != null)
+            while (((line = file.ReadLine()) != null) && (isConverting()))
             {
                 if (line.Contains("SPACING"))
                 {
@@ -160,10 +171,15 @@ namespace VTKtoCSVconvertor
                 }
                 else if (StringsUtils.numberString(line))
                 {
+                    if (commonIndex % 100 == 0)
+                    {
+                        convertStatus = "Анализ строки номер " + commonIndex;
+                        observer.updateProgressStatus();
+                    }
                     strNum = line.Split(new char[] {' ', '\t'});
                     for (int i = 0; i < strNum.Length / 3; i++)
                     {
-                        if (numberIndex < maxNumberOfPoints)
+                        if (numberIndex < numberOfPoints)
                         {
                             if (numbers[numberIndex].number == index)
                             {
@@ -177,12 +193,29 @@ namespace VTKtoCSVconvertor
                         }
                     }
                 }
+                commonIndex++;
             }
+
+            convertStatus = "Завершение работы";
+            observer.updateProgressStatus();
 
             file.Close();
             outFile.Close();
-            progress = 100;
-            observer.updateProgress();
+            if (isConverting())
+            {
+                progress = 100;
+                observer.updateProgress();
+
+                convertStatus = "Конвертация успешно завершена";
+                converting = false;
+                observer.updateProgressStatus();
+            }
+            else
+            {
+                convertStatus = "Конвертация отменена";
+                observer.updateProgressStatus();
+            }
+            observer.updateButtonState();
         }
 
         private Number[] getRandNumbers()
@@ -224,6 +257,16 @@ namespace VTKtoCSVconvertor
         public double getProgress()
         {
             return progress;
+        }
+
+        public bool isConverting()
+        {
+            return converting;
+        }
+
+        public string getProgressStatus()
+        {
+            return convertStatus;
         }
     }
 }
