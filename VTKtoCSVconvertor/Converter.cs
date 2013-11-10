@@ -160,18 +160,21 @@ namespace VTKtoCSVconvertor
                 }
                 else if (StringsUtils.numberString(line))
                 {
-                    strNum = line.Split(' ');
+                    strNum = line.Split(new char[] {' ', '\t'});
                     for (int i = 0; i < strNum.Length / 3; i++)
                     {
-                        if (numbers[numberIndex].number == index)
+                        if (numberIndex < maxNumberOfPoints)
                         {
-                            outLine = StringsUtils.generateCSVString(numbers[numberIndex], strNum[i], strNum[i + 1], strNum[i + 2]);
-                            outFile.WriteLine(outLine);
-                            numberIndex++;
-                            progress += progressStep;
-                            observer.updateProgress();
+                            if (numbers[numberIndex].number == index)
+                            {
+                                outLine = StringsUtils.generateCSVString(numbers[numberIndex], strNum[i], strNum[i + 1], strNum[i + 2]);
+                                outFile.WriteLine(outLine);
+                                numberIndex++;
+                                progress += progressStep;
+                                observer.updateProgress();
+                            }
+                            index++;
                         }
-                        index++;
                     }
                 }
             }
