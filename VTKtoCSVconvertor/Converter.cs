@@ -52,17 +52,20 @@ namespace VTKtoCSVconvertor
         {
             StreamReader file = new StreamReader(wholePath);
             string line;
+            int minNumber = -1;
             while (!(((line = file.ReadLine()) == null) || line.Contains("DIMENSIONS"))) ;
-            line = line.Substring(line.IndexOf("DIMENSIONS") + 11);
-            string[] strNumbers = line.Split(' ');
-            int minNumber = Int32.Parse(strNumbers[0]);
-            for (int i = 0; i < strNumbers.Length; i++)
+            if (line != null)
             {
-                if (minNumber > Int32.Parse(strNumbers[i]))
-                    minNumber = Int32.Parse(strNumbers[i]);
+                line = line.Substring(line.IndexOf("DIMENSIONS") + 11);
+                string[] strNumbers = line.Split(' ');
+                minNumber = Int32.Parse(strNumbers[0]);
+                for (int i = 0; i < strNumbers.Length; i++)
+                {
+                    if (minNumber > Int32.Parse(strNumbers[i]))
+                        minNumber = Int32.Parse(strNumbers[i]);
+                }
             }
             file.Close();
-
             return minNumber;
         }
 

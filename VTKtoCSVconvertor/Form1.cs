@@ -13,6 +13,8 @@ namespace VTKtoCSVconvertor
 {
     public partial class coverterProgramm : Form , FormObserver
     {
+        private AboutForm af = null;
+        private const string OPEN_FILE_FILTER = "ParaView Data(*.vtk)|*.vtk";
         private const string POINT_NUMBER_MESSAGE = "Выберите количество выходных точек от 2 до ";
         private const string STANDART_CONVERT_STATUS = "Конвертация не началась";
         private const int UPDATE_STATUS_TIMER = 5 * 1000;
@@ -27,6 +29,7 @@ namespace VTKtoCSVconvertor
             converter = Converter.getInstance();
             converter.setObserver(this);
             checkingDataCorrect.Enabled = true;
+            openFileDialog.Filter = OPEN_FILE_FILTER;
         }
 
         public void updateSourceNameLabel()
@@ -81,7 +84,7 @@ namespace VTKtoCSVconvertor
             {
                 if (converter.isConverting())
                 {
-                    beginCancelButton.Text = "Отмена";
+                    beginCancelButton.Text = "Отменить";
                     isDoneConvert = false;
                 }
                 else
@@ -125,6 +128,8 @@ namespace VTKtoCSVconvertor
                 if (indexTimer * checkingDataCorrect.Interval >= UPDATE_STATUS_TIMER)
                 {
                     indexTimer = 0;
+                    converterProgressBar.Value = 0;
+                    progressPercentLabel.Text = "0%";
                     progressStatusLabel.Text = STANDART_CONVERT_STATUS;
                 }
             }
@@ -156,6 +161,14 @@ namespace VTKtoCSVconvertor
                     converter.convertAsync();
                 }
             }
+        }
+
+        private void aboutButton_Click(object sender, EventArgs e)
+        {
+            if (af != null) af.Close();
+            af = new AboutForm();
+            af.Activate();
+            af.Show();
         }
     }
 }

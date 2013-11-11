@@ -163,7 +163,6 @@
             // 
             // aboutButton
             // 
-            this.aboutButton.Enabled = false;
             this.aboutButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.aboutButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
             this.aboutButton.Location = new System.Drawing.Point(220, 157);
@@ -172,6 +171,7 @@
             this.aboutButton.TabIndex = 12;
             this.aboutButton.Text = "О программе";
             this.aboutButton.UseVisualStyleBackColor = true;
+            this.aboutButton.Click += new System.EventHandler(this.aboutButton_Click);
             // 
             // checkingDataCorrect
             // 
@@ -214,7 +214,7 @@
             this.Controls.Add(this.csvNameTextBox);
             this.Controls.Add(this.converterProgressBar);
             this.Name = "coverterProgramm";
-            this.Text = "Form1";
+            this.Text = "VTK to CSV";
             this.ResumeLayout(false);
             this.PerformLayout();
 

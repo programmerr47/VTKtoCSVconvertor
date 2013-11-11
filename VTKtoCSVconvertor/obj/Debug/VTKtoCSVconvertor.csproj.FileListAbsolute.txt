@@ -8,3 +8,4 @@ C:\Users\Mikl\documents\visual studio 2012\Projects\testgit\VTKtoCSVconvertor\VT
 C:\Users\Mikl\documents\visual studio 2012\Projects\testgit\VTKtoCSVconvertor\VTKtoCSVconvertor\obj\Debug\VTKtoCSVconvertor.csproj.GenerateResource.Cache
 C:\Users\Mikl\documents\visual studio 2012\Projects\testgit\VTKtoCSVconvertor\VTKtoCSVconvertor\obj\Debug\VTKtoCSVconvertor.exe
 C:\Users\Mikl\documents\visual studio 2012\Projects\testgit\VTKtoCSVconvertor\VTKtoCSVconvertor\obj\Debug\VTKtoCSVconvertor.pdb
+C:\Users\Mikl\documents\visual studio 2012\Projects\testgit\VTKtoCSVconvertor\VTKtoCSVconvertor\obj\Debug\VTKtoCSVconvertor.AboutForm.resources
