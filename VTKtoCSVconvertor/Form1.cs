@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -20,6 +21,7 @@ namespace VTKtoCSVconvertor
         private const int UPDATE_STATUS_TIMER = 5 * 1000;
         private int indexTimer = 0;
         private bool isDoneConvert = true;
+        private ArrayList messages;
 
         private Converter converter;
 
@@ -37,12 +39,47 @@ namespace VTKtoCSVconvertor
             vtkStatusLabel.Text = converter.getSourceName();
         }
 
+        public void updateMessage(string sourceMessage, bool condition)
+        {
+            if (messages != null)
+            {
+                bool hasMessage = false;
+                foreach (string message in messages)
+                {
+                    if (message.Equals(sourceMessage))
+                    {
+                        hasMessage = true;
+                    }
+                }
+
+                if (condition)
+                {
+                    if (!hasMessage)
+                    {
+                        messages.Add(sourceMessage);
+                    }
+                }
+                else
+                {
+                    if (hasMessage)
+                    {
+                        messages.Remove(sourceMessage);
+                    }
+                }
+            }
+            else
+            {
+                if (condition)
+                {
+                    messages = new ArrayList();
+                    messages.Add(sourceMessage);
+                }
+            }
+        }
+
         public void updatePointsNumberLabel()
         {
-            if (converter.getNumberOfPoints() == -1)
-                pointsNumberStatusLabel.Text = "Введены некорректные данные.\nПожалуйста, повторите попытку";
-            else
-                pointsNumberStatusLabel.Text = "";
+            updateMessage("- Введено некорректное число точек. Пожалуйста, проверьте находится ли ваше число в указанном диапазоне и повторите попытку", converter.getNumberOfPoints() == -1);
         }
 
         public void updatePointsNumberMessage()
@@ -55,10 +92,7 @@ namespace VTKtoCSVconvertor
 
         public void updateOutNameStatus()
         {
-            if (converter.getTargetName().Equals("-"))
-                csvNameStatusLabel.Text = "Введено некорректное имя файла.\nНазвание должно содержать только\nбуквы латинского алфавита";
-            else
-                csvNameStatusLabel.Text = "";
+            updateMessage("- Введено некорректное имя файла. Название должно содержать только буквы латинского алфавита", converter.getTargetName().Equals("-"));
         }
 
         public void updateProgress()
@@ -146,6 +180,16 @@ namespace VTKtoCSVconvertor
             converter.setNumberOfPoints(numberOfPoints);
 
             converter.setTargetName(csvNameTextBox.Text);
+
+            if (messages != null)
+            {
+                string messagesBoxText = "";
+                foreach(string message in messages) 
+                {
+                    messagesBoxText += message + Environment.NewLine + Environment.NewLine;
+                }
+                messageBox.Text = messagesBoxText;
+            }
         }
 
         private void beginCancelButton_Click(object sender, EventArgs e)
