@@ -2,13 +2,17 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace VTKtoCSVconvertor
 {
     class RectangleConverter : Converter
     {
+        private static RectangleConverter instance;
+
         private int sourceFieldSizeX = -1;
         private int sourceFieldSizeY = -1;
         private int sourceFieldSizeZ = -1;
@@ -25,7 +29,139 @@ namespace VTKtoCSVconvertor
         private int targetFieldOffsetY = -1;
         private int targetFieldOffsetZ = -1;
 
-        public override bool isAbleToConvert()
+        public int getTartgetFieldSizeX() { return targetFieldSizeX;}
+        public int getTartgetFieldSizeY() { return targetFieldSizeY;}
+        public int getTartgetFieldSizeZ() { return targetFieldSizeZ;}
+        public int getTartgetFieldBeginX() { return targetFieldBeginX;}
+        public int getTartgetFieldBeginY() { return targetFieldBeginY;}
+        public int getTartgetFieldBeginZ() { return targetFieldBeginZ;}
+        public int getTartgetFieldOffsetX() { return targetFieldOffsetX; }
+        public int getTartgetFieldOffsetY() { return targetFieldOffsetY; }
+        public int getTartgetFieldOffsetZ() { return targetFieldOffsetZ; }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public static RectangleConverter getRectInstance()
+        {
+            if (instance == null)
+                instance = new RectangleConverter();
+
+            return instance;
+        }
+
+        public override void setSource(string wholePath)
+        {
+            base.setSource(wholePath);
+            getDimensions(wholePath);
+            observer.updateDimensionsStatus("максимальные размеры в координатах (" + sourceFieldSizeX + ";" + sourceFieldSizeY + ";" + sourceFieldSizeZ + ") \n" +
+                                            "начало координат базового поля (0; 0; 0)");
+
+            path = wholePath.Substring(0, wholePath.LastIndexOf("\\"));
+            sourceName = wholePath.Substring(wholePath.LastIndexOf("\\") + 1);
+            observer.updateSourceNameLabel();
+        }
+
+        public void setTargetFieldOffsetX(int targetFieldOffsetX)
+        {
+            this.targetFieldOffsetX = setTargetFieldOffset(targetFieldSizeX, targetFieldOffsetX);
+            observer.updateFieldInfo();
+        }
+
+        public void setTargetFieldOffsetY(int targetFieldOffsetY)
+        {
+            this.targetFieldOffsetY = setTargetFieldOffset(targetFieldSizeY, targetFieldOffsetY);
+            observer.updateFieldInfo();
+        }
+
+        public void setTargetFieldOffsetZ(int targetFieldOffsetZ)
+        {
+            this.targetFieldOffsetZ = setTargetFieldOffset(targetFieldSizeZ, targetFieldOffsetZ);
+            observer.updateFieldInfo();
+        }
+
+        private int setTargetFieldOffset(int size, int offset)
+        {
+            if ((size != -1) && ((size - 1) % offset == 0))
+            {
+                return offset;
+            }
+            else
+            {
+                return -1;
+            }
+        }
+
+        public void setTargetFieldSizeX(int targetFieldSizeX)
+        {
+            this.targetFieldSizeX = setTargetField(targetFieldSizeX, targetFieldBeginX, sourceFieldSizeX);
+            observer.updateFieldInfo();
+        }
+
+        public void setTargetFieldSizeY(int targetFieldSizeY)
+        {
+            this.targetFieldSizeY = setTargetField(targetFieldSizeY, targetFieldBeginY, sourceFieldSizeY);
+            observer.updateFieldInfo();
+        }
+
+        public void setTargetFieldSizeZ(int targetFieldSizeZ)
+        {
+            this.targetFieldSizeZ = setTargetField(targetFieldSizeZ, targetFieldBeginZ, sourceFieldSizeZ);
+            observer.updateFieldInfo();
+        }
+
+        private int setTargetField(int a, int b, int sourceSize)
+        {
+            int temp = 0;
+            if (b != -1)
+            {
+                temp = b;
+            }
+
+            if (temp + a - sourceSize <= 0)
+            {
+                return a;
+            }
+            else
+            {
+                return -1;
+            }
+        }
+
+        public void setTargetFieldBeginX(int targetFieldBeginX)
+        {
+            this.targetFieldBeginX = setTargetField(targetFieldBeginX, targetFieldSizeX, sourceFieldSizeX);
+            observer.updateFieldInfo();
+        }
+
+        public void setTargetFieldBeginY(int targetFieldBeginY)
+        {
+            this.targetFieldBeginY = setTargetField(targetFieldBeginY, targetFieldSizeY, sourceFieldSizeY);
+            observer.updateFieldInfo();
+        }
+
+        public void setTargetFieldBeginZ(int targetFieldBeginZ)
+        {
+            this.targetFieldBeginZ = setTargetField(targetFieldBeginZ, targetFieldSizeZ, sourceFieldSizeZ);
+            observer.updateFieldInfo();
+        }
+
+        private void getDimensions(string wholePath)
+        {
+            StreamReader file = new StreamReader(wholePath);
+            string line;
+            int minNumber = -1;
+            while (!(((line = file.ReadLine()) == null) || line.Contains("DIMENSIONS"))) ;
+            if (line != null)
+            {
+                line = line.Substring(line.IndexOf("DIMENSIONS") + 11);
+                string[] strNumbers = line.Split(' ');
+                sourceFieldSizeX = Int32.Parse(strNumbers[0]);
+                sourceFieldSizeY = Int32.Parse(strNumbers[1]);
+                sourceFieldSizeZ = Int32.Parse(strNumbers[2]);
+            }
+            file.Close();
+        }
+
+        public bool isAbleToRectangleConvert()
         {
             bool ableSourceField = (sourceFieldSizeX != -1) && (sourceFieldSizeY != -1) && (sourceFieldSizeZ != -1);
             bool ableTargetFieldSize = (targetFieldSizeX != -1) && (targetFieldSizeY != -1) && (targetFieldSizeZ != -1);
@@ -36,7 +172,15 @@ namespace VTKtoCSVconvertor
             return ableBaseFileds && !targetName.Equals("-");
         }
 
-        public override void convert()
+        public void rectangleConvertAsync()
+        {
+            converting = true;
+            observer.updateButtonState();
+            Thread t1 = new Thread(rectangleConvert);
+            t1.Start();
+        }
+
+        public void rectangleConvert()
         {
             convertStatus = "Подготовка начальных данных";
             observer.updateProgressStatus();
@@ -45,7 +189,7 @@ namespace VTKtoCSVconvertor
             //Number[] numbers = getRandNumbers();
             //Array.Sort(numbers, NumberComparator.compareNumber);
             int numberOfTargetPoints = (targetFieldSizeX / targetFieldOffsetX) * (targetFieldSizeY / targetFieldOffsetY) * (targetFieldSizeZ / targetFieldOffsetZ);
-            double progressStep = (100) / numberOfTargetPoints;
+            double progressStep = (100.0) / numberOfTargetPoints;
 
             StreamReader file = new StreamReader(path + "\\" + sourceName);
             StreamWriter outFile = new StreamWriter(path + "\\" + targetName + ".csv");
@@ -88,6 +232,21 @@ namespace VTKtoCSVconvertor
                     strNum = line.Split(new char[] { ' ', '\t' });
                     for (int i = 0; i < strNum.Length / 3; i++)
                     {
+                        if (((xIndex >= targetFieldBeginX) && (xIndex < (targetFieldSizeX + targetFieldBeginX)) && ((xIndex - targetFieldBeginX) % targetFieldOffsetX == 0)) &&
+                            ((yIndex >= targetFieldBeginY) && (yIndex < (targetFieldSizeY + targetFieldBeginY)) && ((yIndex - targetFieldBeginY) % targetFieldOffsetY == 0)) &&
+                            ((zIndex >= targetFieldBeginZ) && (zIndex < (targetFieldSizeZ + targetFieldBeginZ)) && ((zIndex - targetFieldBeginZ) % targetFieldOffsetZ == 0))) 
+                        {
+                            Number number = new Number();
+                            number.x = xIndex;
+                            number.y = yIndex;
+                            number.z = zIndex;
+
+                            outLine = StringsUtils.generateCSVString(number, strNum[i * 3], strNum[i * 3 + 1], strNum[i * 3 + 2]);
+                            outFile.WriteLine(outLine);
+                            progress += progressStep;
+                            observer.updateProgress();
+                        }
+
                         xIndex++;
                         if (xIndex >= sourceFieldSizeX)
                         {
@@ -98,21 +257,6 @@ namespace VTKtoCSVconvertor
                                 yIndex = 0;
                                 zIndex++;
                             }
-                        }
-
-                        if (((xIndex >= targetFieldBeginX) && (xIndex < targetFieldSizeX) && ((xIndex - targetFieldBeginX) % targetFieldOffsetX == 0)) &&
-                            ((yIndex >= targetFieldBeginY) && (yIndex < targetFieldSizeY) && ((yIndex - targetFieldBeginY) % targetFieldOffsetY == 0)) &&
-                            ((zIndex >= targetFieldBeginZ) && (zIndex < targetFieldSizeZ) && ((zIndex - targetFieldBeginZ) % targetFieldOffsetZ == 0))) 
-                        {
-                            Number number = new Number();
-                            number.x = xIndex;
-                            number.y = yIndex;
-                            number.z = zIndex;
-
-                            outLine = StringsUtils.generateCSVString(number, strNum[i], strNum[i + 1], strNum[i + 2]);
-                            outFile.WriteLine(outLine);
-                            progress += progressStep;
-                            observer.updateProgress();
                         }
                     }
                 }

@@ -17,18 +17,19 @@ namespace VTKtoCSVconvertor
         private AboutForm af = null;
         private const string OPEN_FILE_FILTER = "ParaView Data(*.vtk)|*.vtk";
         private const string POINT_NUMBER_MESSAGE = "Выберите количество выходных точек от 2 до ";
+        private const string DIMENSIONS_MESSAGE = "Укажите размеры прямоугольника, координаты начальной точки и шаг дискретизации";
         private const string STANDART_CONVERT_STATUS = "Конвертация не началась";
         private const int UPDATE_STATUS_TIMER = 5 * 1000;
         private int indexTimer = 0;
         private bool isDoneConvert = true;
         private ArrayList messages;
 
-        private Converter converter;
+        private RectangleConverter converter;
 
         public coverterProgramm()
         {
             InitializeComponent();
-            converter = Converter.getInstance();
+            converter = RectangleConverter.getRectInstance();
             converter.setObserver(this);
             checkingDataCorrect.Enabled = true;
             openFileDialog.Filter = OPEN_FILE_FILTER;
@@ -79,7 +80,20 @@ namespace VTKtoCSVconvertor
 
         public void updatePointsNumberLabel()
         {
-            updateMessage("- Введено некорректное число точек. Пожалуйста, проверьте находится ли ваше число в указанном диапазоне и повторите попытку", converter.getNumberOfPoints() == -1);
+            updateMessage("- Введено некорректное число точек. Пожалуйста, проверьте, находится ли ваше число в указанном диапазоне и повторите попытку", converter.getNumberOfPoints() == -1);
+        }
+
+        public void updateFieldInfo()
+        {
+            updateMessage("- Введен неправильный размер поля (X - координата). Проверьте, находится ли ваше число в указанном диапазоне", converter.getTartgetFieldSizeX() == -1);
+            updateMessage("- Введен неправильный размер поля (Y - координата). Проверьте, находится ли ваше число в указанном диапазоне", converter.getTartgetFieldSizeY() == -1);
+            updateMessage("- Введен неправильный размер поля (Z - координата). Проверьте, находится ли ваше число в указанном диапазоне", converter.getTartgetFieldSizeZ() == -1);
+            updateMessage("- Введена неправильная начальная точка поля (X - координата). Проверьте, находится ли ваше число в указанном диапазоне (не меньше 0, не больше указанного максимума)", converter.getTartgetFieldBeginX() == -1);
+            updateMessage("- Введена неправильная начальная точка поля (Y - координата). Проверьте, находится ли ваше число в указанном диапазоне (не меньше 0, не больше указанного максимума)", converter.getTartgetFieldBeginY() == -1);
+            updateMessage("- Введена неправильная начальная точка поля (Z - координата). Проверьте, находится ли ваше число в указанном диапазоне (не меньше 0, не больше указанного максимума)", converter.getTartgetFieldBeginZ() == -1);
+            updateMessage("- Введен неправильный шаг дискретезации (X - координата). Проверьте, делится ли он нацело на указанный размер поля по соответствующей координате", converter.getTartgetFieldOffsetX() == -1);
+            updateMessage("- Введен неправильный шаг дискретезации (Y - координата). Проверьте, делится ли он нацело на указанный размер поля по соответствующей координате", converter.getTartgetFieldOffsetY() == -1);
+            updateMessage("- Введен неправильный шаг дискретезации (Z - координата). Проверьте, делится ли он нацело на указанный размер поля по соответствующей координате", converter.getTartgetFieldOffsetZ() == -1);
         }
 
         public void updatePointsNumberMessage()
@@ -88,6 +102,11 @@ namespace VTKtoCSVconvertor
                 poinsNumberLabel.Text = POINT_NUMBER_MESSAGE + converter.getMaxNumberOfPoints();
             else
                 poinsNumberLabel.Text = POINT_NUMBER_MESSAGE;
+        }
+
+        public void updateDimensionsStatus(string status)
+        {
+            infoLabel.Text = DIMENSIONS_MESSAGE + "\n" + status;
         }
 
         public void updateOutNameStatus()
@@ -169,15 +188,54 @@ namespace VTKtoCSVconvertor
             }
 
             int numberOfPoints;
-            try
-            {
-                numberOfPoints = Int32.Parse(pointsNumberTextBox.Text);
-            }
-            catch (Exception ex)
-            {
-                numberOfPoints = -1;
-            }
+            try { numberOfPoints = Int32.Parse(pointsNumberTextBox.Text); } 
+            catch (Exception ex) { numberOfPoints = -1; }
             converter.setNumberOfPoints(numberOfPoints);
+
+            int rectSizeX;
+            try { rectSizeX = Int32.Parse(xRecSize.Text); }
+            catch (Exception ex) { rectSizeX = -1; }
+            converter.setTargetFieldSizeX(rectSizeX);
+
+            int rectSizeY;
+            try { rectSizeY = Int32.Parse(yRecSize.Text); }
+            catch (Exception ex) { rectSizeY = -1; }
+            converter.setTargetFieldSizeY(rectSizeY);
+
+            int rectSizeZ;
+            try { rectSizeZ = Int32.Parse(zRecSize.Text); }
+            catch (Exception ex) { rectSizeZ = -1; }
+            converter.setTargetFieldSizeZ(rectSizeZ);
+
+            int rectBeginX;
+            try { rectBeginX = Int32.Parse(xRecOffset.Text); }
+            catch (Exception ex) { rectBeginX = -1; }
+            converter.setTargetFieldBeginX(rectBeginX);
+
+            int rectBeginY;
+            try { rectBeginY = Int32.Parse(yRecOffset.Text); }
+            catch (Exception ex) { rectBeginY = -1; }
+            converter.setTargetFieldBeginY(rectBeginY);
+
+            int rectBeginZ;
+            try { rectBeginZ = Int32.Parse(zRecOffset.Text); }
+            catch (Exception ex) { rectBeginZ = -1; }
+            converter.setTargetFieldBeginZ(rectBeginZ);
+
+            int rectStepX;
+            try { rectStepX = Int32.Parse(xRecStep.Text); }
+            catch (Exception ex) { rectStepX = -1; }
+            converter.setTargetFieldOffsetX(rectStepX);
+
+            int rectStepY;
+            try { rectStepY = Int32.Parse(yRecStep.Text); }
+            catch (Exception ex) { rectStepY = -1; }
+            converter.setTargetFieldOffsetY(rectStepY);
+
+            int rectStepZ;
+            try { rectStepZ = Int32.Parse(zRecStep.Text); }
+            catch (Exception ex) { rectStepZ = -1; }
+            converter.setTargetFieldOffsetZ(rectStepZ);
 
             converter.setTargetName(csvNameTextBox.Text);
 
@@ -200,9 +258,19 @@ namespace VTKtoCSVconvertor
             }
             else
             {
-                if (converter.isAbleToConvert())
+                if (typeConverter.SelectedIndex == 0)
                 {
-                    converter.convertAsync();
+                    if (converter.isAbleToConvert())
+                    {
+                        converter.convertAsync();
+                    }
+                }
+                else
+                {
+                    if (converter.isAbleToRectangleConvert())
+                    {
+                        converter.rectangleConvertAsync();
+                    }
                 }
             }
         }

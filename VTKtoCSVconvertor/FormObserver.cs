@@ -15,5 +15,7 @@ namespace VTKtoCSVconvertor
         void updateProgress();
         void updateButtonState();
         void updateProgressStatus();
+        void updateDimensionsStatus(string status);
+        void updateFieldInfo();
     }
 }

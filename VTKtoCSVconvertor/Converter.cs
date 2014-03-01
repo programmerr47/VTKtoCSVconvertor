@@ -44,7 +44,7 @@ namespace VTKtoCSVconvertor
             this.observer = observer;
         }
 
-        public void setSource(string wholePath) {
+        public virtual void setSource(string wholePath) {
             maxNumberOfPoints = getMaxNumberOfPointsFromFile(wholePath);
             observer.updatePointsNumberMessage();
 
