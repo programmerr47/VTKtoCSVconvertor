@@ -14,16 +14,16 @@ namespace VTKtoCSVconvertor
     {
         private int maxNumberOfPoints = -1;
         private int numberOfPoints = -1;
-        private string sourceName;
-        private string targetName;
-        private string path;
+        protected string sourceName = "-";
+        protected string targetName;
+        protected string path;
 
-        private string convertStatus = "";
-        private bool converting = false;
-        private double progress;
+        protected string convertStatus = "";
+        protected bool converting = false;
+        protected double progress;
 
         private static Converter instance;
-        private FormObserver observer;
+        protected FormObserver observer;
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public static Converter getInstance()
@@ -32,6 +32,11 @@ namespace VTKtoCSVconvertor
                 instance = new Converter();
 
             return instance;
+        }
+
+        public bool isAbleToConvert()
+        {
+            return (maxNumberOfPoints != -1) && (numberOfPoints != -1) && (!targetName.Equals("-"));
         }
 
         public void setObserver(FormObserver observer)

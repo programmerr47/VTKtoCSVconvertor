@@ -200,7 +200,7 @@ namespace VTKtoCSVconvertor
             }
             else
             {
-                if ((converter.getMaxNumberOfPoints() != -1) && (csvNameStatusLabel.Text.Equals("")) && (pointsNumberStatusLabel.Text.Equals("")))
+                if (converter.isAbleToConvert())
                 {
                     converter.convertAsync();
                 }
