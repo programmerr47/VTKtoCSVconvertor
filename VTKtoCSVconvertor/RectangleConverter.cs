@@ -62,19 +62,40 @@ namespace VTKtoCSVconvertor
 
         public void setTargetFieldOffsetX(int targetFieldOffsetX)
         {
-            this.targetFieldOffsetX = setTargetFieldOffset(targetFieldSizeX, targetFieldOffsetX);
+            if (targetFieldOffsetX > 0)
+            {
+                this.targetFieldOffsetX = targetFieldOffsetX;
+            }
+            else
+            {
+                this.targetFieldOffsetX = -1;
+            }
             observer.updateFieldInfo();
         }
 
         public void setTargetFieldOffsetY(int targetFieldOffsetY)
         {
-            this.targetFieldOffsetY = setTargetFieldOffset(targetFieldSizeY, targetFieldOffsetY);
+            if (targetFieldOffsetY > 0)
+            {
+                this.targetFieldOffsetY = targetFieldOffsetY;
+            }
+            else
+            {
+                this.targetFieldOffsetY = -1;
+            }
             observer.updateFieldInfo();
         }
 
         public void setTargetFieldOffsetZ(int targetFieldOffsetZ)
         {
-            this.targetFieldOffsetZ = setTargetFieldOffset(targetFieldSizeZ, targetFieldOffsetZ);
+            if (targetFieldOffsetZ > 0)
+            {
+                this.targetFieldOffsetZ = targetFieldOffsetZ;
+            }
+            else
+            {
+                this.targetFieldOffsetZ = -1;
+            }
             observer.updateFieldInfo();
         }
 
@@ -186,9 +207,13 @@ namespace VTKtoCSVconvertor
             observer.updateProgressStatus();
             progress = 0;
             observer.updateProgress();
-            //Number[] numbers = getRandNumbers();
-            //Array.Sort(numbers, NumberComparator.compareNumber);
-            int numberOfTargetPoints = (targetFieldSizeX / targetFieldOffsetX) * (targetFieldSizeY / targetFieldOffsetY) * (targetFieldSizeZ / targetFieldOffsetZ);
+            int remainX = (((targetFieldSizeX - 1) % targetFieldOffsetX) == 0) ? 0 : 1;
+            int remainY = (((targetFieldSizeX - 1) % targetFieldOffsetX) == 0) ? 0 : 1;
+            int remainZ = (((targetFieldSizeX - 1) % targetFieldOffsetX) == 0) ? 0 : 1;
+            int numberOfXPoints = (((targetFieldSizeX - 1) / targetFieldOffsetX) > 0) ? (((targetFieldSizeX - 1) / targetFieldOffsetX) + 1 + remainX) : 2;
+            int numberOfYPoints = (((targetFieldSizeY - 1) / targetFieldOffsetY) > 0) ? (((targetFieldSizeY - 1) / targetFieldOffsetY) + 1 + remainY) : 2;
+            int numberOfZPoints = (((targetFieldSizeZ - 1) / targetFieldOffsetZ) > 0) ? (((targetFieldSizeZ - 1) / targetFieldOffsetZ) + 1 + remainZ) : 2;
+            int numberOfTargetPoints = numberOfXPoints * numberOfYPoints * numberOfZPoints;
             double progressStep = (100.0) / numberOfTargetPoints;
 
             StreamReader file = new StreamReader(path + "\\" + sourceName);
@@ -232,9 +257,9 @@ namespace VTKtoCSVconvertor
                     strNum = line.Split(new char[] { ' ', '\t' });
                     for (int i = 0; i < strNum.Length / 3; i++)
                     {
-                        if (((xIndex >= targetFieldBeginX) && (xIndex < (targetFieldSizeX + targetFieldBeginX)) && ((xIndex - targetFieldBeginX) % targetFieldOffsetX == 0)) &&
-                            ((yIndex >= targetFieldBeginY) && (yIndex < (targetFieldSizeY + targetFieldBeginY)) && ((yIndex - targetFieldBeginY) % targetFieldOffsetY == 0)) &&
-                            ((zIndex >= targetFieldBeginZ) && (zIndex < (targetFieldSizeZ + targetFieldBeginZ)) && ((zIndex - targetFieldBeginZ) % targetFieldOffsetZ == 0))) 
+                        if ((((xIndex >= targetFieldBeginX) && (xIndex < (targetFieldSizeX + targetFieldBeginX)) && ((xIndex - targetFieldBeginX) % targetFieldOffsetX == 0)) || (xIndex == (targetFieldSizeX + targetFieldBeginX - 1))) &&
+                            (((yIndex >= targetFieldBeginY) && (yIndex < (targetFieldSizeY + targetFieldBeginY)) && ((yIndex - targetFieldBeginY) % targetFieldOffsetY == 0)) || (yIndex == (targetFieldSizeY + targetFieldBeginY - 1))) &&
+                            (((zIndex >= targetFieldBeginZ) && (zIndex < (targetFieldSizeZ + targetFieldBeginZ)) && ((zIndex - targetFieldBeginZ) % targetFieldOffsetZ == 0)) || (zIndex == (targetFieldSizeZ + targetFieldBeginZ - 1)))) 
                         {
                             Number number = new Number();
                             number.x = xIndex;
