@@ -85,15 +85,15 @@ namespace VTKtoCSVconvertor
 
         public void updateFieldInfo()
         {
-            updateMessage("- Введен неправильный размер поля (X - координата). Проверьте, находится ли ваше число в указанном диапазоне", converter.getTartgetFieldSizeX() == -1);
-            updateMessage("- Введен неправильный размер поля (Y - координата). Проверьте, находится ли ваше число в указанном диапазоне", converter.getTartgetFieldSizeY() == -1);
-            updateMessage("- Введен неправильный размер поля (Z - координата). Проверьте, находится ли ваше число в указанном диапазоне", converter.getTartgetFieldSizeZ() == -1);
-            updateMessage("- Введена неправильная начальная точка поля (X - координата). Проверьте, находится ли ваше число в указанном диапазоне (не меньше 0, не больше указанного максимума)", converter.getTartgetFieldBeginX() == -1);
-            updateMessage("- Введена неправильная начальная точка поля (Y - координата). Проверьте, находится ли ваше число в указанном диапазоне (не меньше 0, не больше указанного максимума)", converter.getTartgetFieldBeginY() == -1);
-            updateMessage("- Введена неправильная начальная точка поля (Z - координата). Проверьте, находится ли ваше число в указанном диапазоне (не меньше 0, не больше указанного максимума)", converter.getTartgetFieldBeginZ() == -1);
-            updateMessage("- Введен неправильный шаг дискретезации (X - координата). Проверьте, больше ли он нуля", converter.getTartgetFieldOffsetX() == -1);
-            updateMessage("- Введен неправильный шаг дискретезации (Y - координата). Проверьте, больше ли он нуля", converter.getTartgetFieldOffsetY() == -1);
-            updateMessage("- Введен неправильный шаг дискретезации (Z - координата). Проверьте, больше ли он нуля", converter.getTartgetFieldOffsetZ() == -1);
+            updateMessage("- Введен неправильный размер поля (X - координата). Проверьте, находится ли ваше число в указанном диапазоне", converter.getTargetFieldSizeX() == -1);
+            updateMessage("- Введен неправильный размер поля (Y - координата). Проверьте, находится ли ваше число в указанном диапазоне", converter.getTargetFieldSizeY() == -1);
+            updateMessage("- Введен неправильный размер поля (Z - координата). Проверьте, находится ли ваше число в указанном диапазоне", converter.getTargetFieldSizeZ() == -1);
+            updateMessage("- Введена неправильная начальная точка поля (X - координата). Проверьте, находится ли ваше число в указанном диапазоне (не меньше 0, не больше указанного максимума)", converter.getTargetFieldBeginX() == -1);
+            updateMessage("- Введена неправильная начальная точка поля (Y - координата). Проверьте, находится ли ваше число в указанном диапазоне (не меньше 0, не больше указанного максимума)", converter.getTargetFieldBeginY() == -1);
+            updateMessage("- Введена неправильная начальная точка поля (Z - координата). Проверьте, находится ли ваше число в указанном диапазоне (не меньше 0, не больше указанного максимума)", converter.getTargetFieldBeginZ() == -1);
+            updateMessage("- Введен неправильный шаг дискретезации (X - координата). Проверьте, больше ли он нуля", converter.getTargetFieldOffsetX() == -1);
+            updateMessage("- Введен неправильный шаг дискретезации (Y - координата). Проверьте, больше ли он нуля", converter.getTargetFieldOffsetY() == -1);
+            updateMessage("- Введен неправильный шаг дискретезации (Z - координата). Проверьте, больше ли он нуля", converter.getTargetFieldOffsetZ() == -1);
         }
 
         public void updatePointsNumberMessage()
@@ -282,5 +282,53 @@ namespace VTKtoCSVconvertor
             af.Activate();
             af.Show();
         }
+
+        private void configurateByExample(int sizeX, int sizeY, int sizeZ, int offsetX, int offsetY, int offsetZ, int discX, int discY, int discZ)
+        {
+            xRecSize.Text = sizeX.ToString();
+            yRecSize.Text = sizeY.ToString();
+            zRecSize.Text = sizeZ.ToString();
+            xRecOffset.Text = offsetX.ToString();
+            yRecOffset.Text = offsetY.ToString();
+            zRecOffset.Text = offsetZ.ToString();
+            xRecStep.Text = discX.ToString();
+            yRecStep.Text = discY.ToString();
+            zRecStep.Text = discZ.ToString();
+        }
+
+        private void exConfigButton1_Click(object sender, EventArgs e)
+        {
+            configurateByExample(converter.getSourceFieldSizeX(), converter.getSourceFieldSizeY(), converter.getSourceFieldSizeZ(), 0, 0, 0, 4, 4, 4);
+        }
+
+        private void exConfigButton2_Click(object sender, EventArgs e)
+        {
+            configurateByExample(converter.getSourceFieldSizeX(), converter.getSourceFieldSizeY(), converter.getSourceFieldSizeZ(), 0, 0, 0, 16, 16, 16);
+        }
+
+        private void exConfigButton3_Click(object sender, EventArgs e)
+        {
+            configurateByExample(converter.getSourceFieldSizeX() / 2, converter.getSourceFieldSizeY() / 3, converter.getSourceFieldSizeZ() / 4,
+                converter.getSourceFieldSizeX() / 4, converter.getSourceFieldSizeY() / 4, converter.getSourceFieldSizeZ() / 4, 3, 3, 3);
+        }
+
+        private void exConfigButton4_Click(object sender, EventArgs e)
+        {
+            configurateByExample(converter.getSourceFieldSizeX() / 2, converter.getSourceFieldSizeY() / 2, converter.getSourceFieldSizeZ() / 2,
+                0, converter.getSourceFieldSizeY() / 4, converter.getSourceFieldSizeZ() / 2, 3, 3, 3);
+        }
+
+        private void exConfigButton5_Click(object sender, EventArgs e)
+        {
+            configurateByExample(converter.getSourceFieldSizeX() / 3, converter.getSourceFieldSizeY() / 3, converter.getSourceFieldSizeZ() / 3,
+                0, 0, 0, 6, 6, 6);
+        }
+
+        private void exConfigButton6_Click(object sender, EventArgs e)
+        {
+            configurateByExample(converter.getSourceFieldSizeX() / 3, converter.getSourceFieldSizeY() / 5, converter.getSourceFieldSizeZ() / 2,
+                converter.getSourceFieldSizeX() / 2, converter.getSourceFieldSizeX() / 5, converter.getSourceFieldSizeX() / 7, 6, 6, 6);
+        }
+
     }
 }

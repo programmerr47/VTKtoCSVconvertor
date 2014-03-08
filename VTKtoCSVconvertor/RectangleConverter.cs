@@ -29,15 +29,18 @@ namespace VTKtoCSVconvertor
         private int targetFieldOffsetY = -1;
         private int targetFieldOffsetZ = -1;
 
-        public int getTartgetFieldSizeX() { return targetFieldSizeX;}
-        public int getTartgetFieldSizeY() { return targetFieldSizeY;}
-        public int getTartgetFieldSizeZ() { return targetFieldSizeZ;}
-        public int getTartgetFieldBeginX() { return targetFieldBeginX;}
-        public int getTartgetFieldBeginY() { return targetFieldBeginY;}
-        public int getTartgetFieldBeginZ() { return targetFieldBeginZ;}
-        public int getTartgetFieldOffsetX() { return targetFieldOffsetX; }
-        public int getTartgetFieldOffsetY() { return targetFieldOffsetY; }
-        public int getTartgetFieldOffsetZ() { return targetFieldOffsetZ; }
+        public int getSourceFieldSizeX() { return sourceFieldSizeX; }
+        public int getSourceFieldSizeY() { return sourceFieldSizeY; }
+        public int getSourceFieldSizeZ() { return sourceFieldSizeZ; }
+        public int getTargetFieldSizeX() { return targetFieldSizeX; }
+        public int getTargetFieldSizeY() { return targetFieldSizeY; }
+        public int getTargetFieldSizeZ() { return targetFieldSizeZ; }
+        public int getTargetFieldBeginX() { return targetFieldBeginX;}
+        public int getTargetFieldBeginY() { return targetFieldBeginY;}
+        public int getTargetFieldBeginZ() { return targetFieldBeginZ;}
+        public int getTargetFieldOffsetX() { return targetFieldOffsetX; }
+        public int getTargetFieldOffsetY() { return targetFieldOffsetY; }
+        public int getTargetFieldOffsetZ() { return targetFieldOffsetZ; }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public static RectangleConverter getRectInstance()
