@@ -211,8 +211,8 @@ namespace VTKtoCSVconvertor
             progress = 0;
             observer.updateProgress();
             int remainX = (((targetFieldSizeX - 1) % targetFieldOffsetX) == 0) ? 0 : 1;
-            int remainY = (((targetFieldSizeX - 1) % targetFieldOffsetX) == 0) ? 0 : 1;
-            int remainZ = (((targetFieldSizeX - 1) % targetFieldOffsetX) == 0) ? 0 : 1;
+            int remainY = (((targetFieldSizeY - 1) % targetFieldOffsetY) == 0) ? 0 : 1;
+            int remainZ = (((targetFieldSizeZ - 1) % targetFieldOffsetZ) == 0) ? 0 : 1;
             int numberOfXPoints = (((targetFieldSizeX - 1) / targetFieldOffsetX) > 0) ? (((targetFieldSizeX - 1) / targetFieldOffsetX) + 1 + remainX) : 2;
             int numberOfYPoints = (((targetFieldSizeY - 1) / targetFieldOffsetY) > 0) ? (((targetFieldSizeY - 1) / targetFieldOffsetY) + 1 + remainY) : 2;
             int numberOfZPoints = (((targetFieldSizeZ - 1) / targetFieldOffsetZ) > 0) ? (((targetFieldSizeZ - 1) / targetFieldOffsetZ) + 1 + remainZ) : 2;
