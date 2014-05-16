@@ -53,6 +53,12 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.label2 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.exConfigButton6 = new System.Windows.Forms.Button();
+            this.exConfigButton4 = new System.Windows.Forms.Button();
+            this.exConfigButton2 = new System.Windows.Forms.Button();
+            this.exConfigButton5 = new System.Windows.Forms.Button();
+            this.exConfigButton3 = new System.Windows.Forms.Button();
+            this.exConfigButton1 = new System.Windows.Forms.Button();
             this.label12 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
@@ -78,12 +84,6 @@
             this.messageBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.exConfigButton1 = new System.Windows.Forms.Button();
-            this.exConfigButton3 = new System.Windows.Forms.Button();
-            this.exConfigButton5 = new System.Windows.Forms.Button();
-            this.exConfigButton2 = new System.Windows.Forms.Button();
-            this.exConfigButton4 = new System.Windows.Forms.Button();
-            this.exConfigButton6 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.typeConverter.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -262,7 +262,7 @@
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(476, 271);
             this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Выборка точек";
+            this.tabPage1.Text = "Выборка случайных точек";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // label2
@@ -309,8 +309,68 @@
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage2.Size = new System.Drawing.Size(476, 271);
             this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Выбор прямоугольника";
+            this.tabPage2.Text = "Выборка параллелепипеда";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // exConfigButton6
+            // 
+            this.exConfigButton6.Location = new System.Drawing.Point(349, 226);
+            this.exConfigButton6.Name = "exConfigButton6";
+            this.exConfigButton6.Size = new System.Drawing.Size(121, 39);
+            this.exConfigButton6.TabIndex = 27;
+            this.exConfigButton6.Text = "Пример 6";
+            this.exConfigButton6.UseVisualStyleBackColor = true;
+            this.exConfigButton6.Click += new System.EventHandler(this.exConfigButton6_Click);
+            // 
+            // exConfigButton4
+            // 
+            this.exConfigButton4.Location = new System.Drawing.Point(181, 226);
+            this.exConfigButton4.Name = "exConfigButton4";
+            this.exConfigButton4.Size = new System.Drawing.Size(121, 39);
+            this.exConfigButton4.TabIndex = 26;
+            this.exConfigButton4.Text = "Пример 4";
+            this.exConfigButton4.UseVisualStyleBackColor = true;
+            this.exConfigButton4.Click += new System.EventHandler(this.exConfigButton4_Click);
+            // 
+            // exConfigButton2
+            // 
+            this.exConfigButton2.Location = new System.Drawing.Point(12, 226);
+            this.exConfigButton2.Name = "exConfigButton2";
+            this.exConfigButton2.Size = new System.Drawing.Size(121, 39);
+            this.exConfigButton2.TabIndex = 25;
+            this.exConfigButton2.Text = "Пример 2";
+            this.exConfigButton2.UseVisualStyleBackColor = true;
+            this.exConfigButton2.Click += new System.EventHandler(this.exConfigButton2_Click);
+            // 
+            // exConfigButton5
+            // 
+            this.exConfigButton5.Location = new System.Drawing.Point(349, 181);
+            this.exConfigButton5.Name = "exConfigButton5";
+            this.exConfigButton5.Size = new System.Drawing.Size(121, 39);
+            this.exConfigButton5.TabIndex = 24;
+            this.exConfigButton5.Text = "Пример 5";
+            this.exConfigButton5.UseVisualStyleBackColor = true;
+            this.exConfigButton5.Click += new System.EventHandler(this.exConfigButton5_Click);
+            // 
+            // exConfigButton3
+            // 
+            this.exConfigButton3.Location = new System.Drawing.Point(181, 181);
+            this.exConfigButton3.Name = "exConfigButton3";
+            this.exConfigButton3.Size = new System.Drawing.Size(124, 39);
+            this.exConfigButton3.TabIndex = 23;
+            this.exConfigButton3.Text = "Пример 3";
+            this.exConfigButton3.UseVisualStyleBackColor = true;
+            this.exConfigButton3.Click += new System.EventHandler(this.exConfigButton3_Click);
+            // 
+            // exConfigButton1
+            // 
+            this.exConfigButton1.Location = new System.Drawing.Point(9, 181);
+            this.exConfigButton1.Name = "exConfigButton1";
+            this.exConfigButton1.Size = new System.Drawing.Size(124, 39);
+            this.exConfigButton1.TabIndex = 22;
+            this.exConfigButton1.Text = "Пример 1";
+            this.exConfigButton1.UseVisualStyleBackColor = true;
+            this.exConfigButton1.Click += new System.EventHandler(this.exConfigButton1_Click);
             // 
             // label12
             // 
@@ -519,66 +579,6 @@
             this.label3.Size = new System.Drawing.Size(126, 13);
             this.label3.TabIndex = 19;
             this.label3.Text = "Сообщения об ошибках";
-            // 
-            // exConfigButton1
-            // 
-            this.exConfigButton1.Location = new System.Drawing.Point(9, 181);
-            this.exConfigButton1.Name = "exConfigButton1";
-            this.exConfigButton1.Size = new System.Drawing.Size(124, 39);
-            this.exConfigButton1.TabIndex = 22;
-            this.exConfigButton1.Text = "Пример 1";
-            this.exConfigButton1.UseVisualStyleBackColor = true;
-            this.exConfigButton1.Click += new System.EventHandler(this.exConfigButton1_Click);
-            // 
-            // exConfigButton3
-            // 
-            this.exConfigButton3.Location = new System.Drawing.Point(181, 181);
-            this.exConfigButton3.Name = "exConfigButton3";
-            this.exConfigButton3.Size = new System.Drawing.Size(124, 39);
-            this.exConfigButton3.TabIndex = 23;
-            this.exConfigButton3.Text = "Пример 3";
-            this.exConfigButton3.UseVisualStyleBackColor = true;
-            this.exConfigButton3.Click += new System.EventHandler(this.exConfigButton3_Click);
-            // 
-            // exConfigButton5
-            // 
-            this.exConfigButton5.Location = new System.Drawing.Point(349, 181);
-            this.exConfigButton5.Name = "exConfigButton5";
-            this.exConfigButton5.Size = new System.Drawing.Size(121, 39);
-            this.exConfigButton5.TabIndex = 24;
-            this.exConfigButton5.Text = "Пример 5";
-            this.exConfigButton5.UseVisualStyleBackColor = true;
-            this.exConfigButton5.Click += new System.EventHandler(this.exConfigButton5_Click);
-            // 
-            // exConfigButton2
-            // 
-            this.exConfigButton2.Location = new System.Drawing.Point(12, 226);
-            this.exConfigButton2.Name = "exConfigButton2";
-            this.exConfigButton2.Size = new System.Drawing.Size(121, 39);
-            this.exConfigButton2.TabIndex = 25;
-            this.exConfigButton2.Text = "Пример 2";
-            this.exConfigButton2.UseVisualStyleBackColor = true;
-            this.exConfigButton2.Click += new System.EventHandler(this.exConfigButton2_Click);
-            // 
-            // exConfigButton4
-            // 
-            this.exConfigButton4.Location = new System.Drawing.Point(181, 226);
-            this.exConfigButton4.Name = "exConfigButton4";
-            this.exConfigButton4.Size = new System.Drawing.Size(121, 39);
-            this.exConfigButton4.TabIndex = 26;
-            this.exConfigButton4.Text = "Пример 4";
-            this.exConfigButton4.UseVisualStyleBackColor = true;
-            this.exConfigButton4.Click += new System.EventHandler(this.exConfigButton4_Click);
-            // 
-            // exConfigButton6
-            // 
-            this.exConfigButton6.Location = new System.Drawing.Point(349, 226);
-            this.exConfigButton6.Name = "exConfigButton6";
-            this.exConfigButton6.Size = new System.Drawing.Size(121, 39);
-            this.exConfigButton6.TabIndex = 27;
-            this.exConfigButton6.Text = "Пример 6";
-            this.exConfigButton6.UseVisualStyleBackColor = true;
-            this.exConfigButton6.Click += new System.EventHandler(this.exConfigButton6_Click);
             // 
             // coverterProgramm
             // 
