@@ -1,22 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace VTKtoCSVconvertor
 {
     class Converter
     {
+        public static String SUCCESS = "Конвертация успешно завершена";
+
         private int maxNumberOfPoints = -1;
         private int numberOfPoints = -1;
         protected string sourceName = "-";
-        protected string targetName;
-        protected string path;
+        protected string targetName = null;
+        protected string path = null;
+        protected string outputPath = null;
 
         protected string convertStatus = "";
         protected bool converting = false;
@@ -42,6 +41,16 @@ namespace VTKtoCSVconvertor
         public void setObserver(FormObserver observer)
         {
             this.observer = observer;
+        }
+
+        public String GetPath()
+        {
+            return path;
+        }
+
+        public void setOutputPath(String outputPath)
+        {
+            this.outputPath = outputPath;
         }
 
         public virtual void setSource(string wholePath) {
@@ -149,7 +158,7 @@ namespace VTKtoCSVconvertor
             observer.updateProgress();
 
             StreamReader file = new StreamReader(path + "\\" + sourceName);
-            StreamWriter outFile = new StreamWriter(path + "\\" + targetName + ".csv");
+            StreamWriter outFile = new StreamWriter(outputPath);
 
             string line;
             string outLine = null;
@@ -214,7 +223,7 @@ namespace VTKtoCSVconvertor
                 progress = 100;
                 observer.updateProgress();
 
-                convertStatus = "Конвертация успешно завершена";
+                convertStatus = SUCCESS;
                 converting = false;
                 observer.updateProgressStatus();
             }

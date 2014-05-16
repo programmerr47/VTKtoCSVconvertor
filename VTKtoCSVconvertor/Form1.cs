@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -16,6 +17,7 @@ namespace VTKtoCSVconvertor
     {
         private AboutForm af = null;
         private const string OPEN_FILE_FILTER = "ParaView Data(*.vtk)|*.vtk";
+        private const string SAVE_FILE_FILTER = "Database table(*.csv)|*.csv";
         private const string POINT_NUMBER_MESSAGE = "Выберите количество выходных точек от 2 до ";
         private const string DIMENSIONS_MESSAGE = "Укажите размеры прямоугольника, координаты начальной точки и шаг дискретизации";
         private const string STANDART_CONVERT_STATUS = "Конвертация не началась";
@@ -33,6 +35,8 @@ namespace VTKtoCSVconvertor
             converter.setObserver(this);
             checkingDataCorrect.Enabled = true;
             openFileDialog.Filter = OPEN_FILE_FILTER;
+            saveFileDialog.Filter = SAVE_FILE_FILTER;
+            Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
         }
 
         public void updateSourceNameLabel()
@@ -156,6 +160,11 @@ namespace VTKtoCSVconvertor
                 {
                     indexTimer = 0;
                     isDoneConvert = true;
+
+                    if (Converter.SUCCESS.Equals(converter.getProgressStatus()))
+                    {
+                        DialogResult d = MessageBox.Show("Конвертация успешно завершена!", "Уведомление", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    }
                 }
             }));
         }
@@ -167,6 +176,7 @@ namespace VTKtoCSVconvertor
 
         private void vtkOpenButton_Click(object sender, EventArgs e)
         {
+            openFileDialog.InitialDirectory = Directory.GetCurrentDirectory();
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 converter.setSource(openFileDialog.FileName);
@@ -237,7 +247,7 @@ namespace VTKtoCSVconvertor
             catch (Exception ex) { rectStepZ = -1; }
             converter.setTargetFieldOffsetZ(rectStepZ);
 
-            converter.setTargetName(csvNameTextBox.Text);
+            converter.setTargetName("tempSavingCalculations");
 
             if (messages != null)
             {
@@ -252,6 +262,36 @@ namespace VTKtoCSVconvertor
 
         private void beginCancelButton_Click(object sender, EventArgs e)
         {
+            if (converter.GetPath() == null)
+            {
+                DialogResult d = MessageBox.Show("Файл для конвертации не выбран. Вы хотите выбрать файл?", "Вопрос",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+
+                if (d == DialogResult.Yes)
+                {
+                    vtkOpenButton_Click(null, null);
+                }
+            }
+            else
+            {
+                if (typeConverter.SelectedIndex == 0)
+                {
+                    if (!converter.isAbleToConvert())
+                    {
+                        DialogResult d = MessageBox.Show("Конвертация невозможна. Поправьте ошибки, они написаны в окошке \"Сообщения об ошибках\".", "Уведомление",
+                            MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    }
+                }
+                else
+                {
+                    if (!converter.isAbleToRectangleConvert())
+                    {
+                        DialogResult d = MessageBox.Show("Конвертация невозможна. Поправьте ошибки, они написаны в окошке \"Сообщения об ошибках\".", "Уведомление",
+                            MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    }
+                }
+            }
+
             if (converter.isConverting())
             {
                 converter.cancelConvert();
@@ -262,12 +302,41 @@ namespace VTKtoCSVconvertor
                 {
                     if (converter.isAbleToConvert())
                     {
-                        converter.convertAsync();
+                        saveTable(0);
                     }
                 }
                 else
                 {
                     if (converter.isAbleToRectangleConvert())
+                    {
+                        saveTable(1);
+                    }
+                }
+            }
+        }
+
+        private void saveTable(int index)
+        {
+            //try
+            //{AppDomain.CurrentDomain.BaseDirectory
+            Directory.SetCurrentDirectory(converter.GetPath());
+            //}
+            //catch (DirectoryNotFoundException ex)
+            //{
+            //}
+            
+            DialogResult d = MessageBox.Show("Укажите путь, по которому будут сохранены вычисления", "Подсказка", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+
+            if (d == DialogResult.OK)
+            {
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    converter.setOutputPath(saveFileDialog.FileName);
+                    if (index == 0)
+                    {
+                        converter.convertAsync();
+                    }
+                    else
                     {
                         converter.rectangleConvertAsync();
                     }

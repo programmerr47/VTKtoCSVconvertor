@@ -31,13 +31,11 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(coverterProgramm));
             this.converterProgressBar = new System.Windows.Forms.ProgressBar();
-            this.csvNameTextBox = new System.Windows.Forms.TextBox();
             this.progressNameLabel = new System.Windows.Forms.Label();
             this.progressStatusLabel = new System.Windows.Forms.Label();
             this.progressPercentLabel = new System.Windows.Forms.Label();
             this.vtkStatusLabel = new System.Windows.Forms.Label();
             this.beginCancelButton = new System.Windows.Forms.Button();
-            this.csvNameLabel = new System.Windows.Forms.Label();
             this.pointsNumberTextBox = new System.Windows.Forms.TextBox();
             this.poinsNumberLabel = new System.Windows.Forms.Label();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
@@ -84,6 +82,8 @@
             this.messageBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.menuStrip1.SuspendLayout();
             this.typeConverter.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -96,14 +96,6 @@
             this.converterProgressBar.Name = "converterProgressBar";
             this.converterProgressBar.Size = new System.Drawing.Size(708, 23);
             this.converterProgressBar.TabIndex = 0;
-            // 
-            // csvNameTextBox
-            // 
-            this.csvNameTextBox.Location = new System.Drawing.Point(497, 325);
-            this.csvNameTextBox.Name = "csvNameTextBox";
-            this.csvNameTextBox.Size = new System.Drawing.Size(219, 20);
-            this.csvNameTextBox.TabIndex = 1;
-            this.csvNameTextBox.Text = "simpleName";
             // 
             // progressNameLabel
             // 
@@ -138,9 +130,10 @@
             // vtkStatusLabel
             // 
             this.vtkStatusLabel.AutoSize = true;
-            this.vtkStatusLabel.Location = new System.Drawing.Point(494, 29);
+            this.vtkStatusLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.vtkStatusLabel.Location = new System.Drawing.Point(568, 29);
             this.vtkStatusLabel.Name = "vtkStatusLabel";
-            this.vtkStatusLabel.Size = new System.Drawing.Size(109, 13);
+            this.vtkStatusLabel.Size = new System.Drawing.Size(136, 16);
             this.vtkStatusLabel.TabIndex = 6;
             this.vtkStatusLabel.Text = "Не выбран vtk файл";
             // 
@@ -154,15 +147,6 @@
             this.beginCancelButton.Text = "Конвертировать";
             this.beginCancelButton.UseVisualStyleBackColor = true;
             this.beginCancelButton.Click += new System.EventHandler(this.beginCancelButton_Click);
-            // 
-            // csvNameLabel
-            // 
-            this.csvNameLabel.AutoSize = true;
-            this.csvNameLabel.Location = new System.Drawing.Point(494, 309);
-            this.csvNameLabel.Name = "csvNameLabel";
-            this.csvNameLabel.Size = new System.Drawing.Size(127, 13);
-            this.csvNameLabel.TabIndex = 9;
-            this.csvNameLabel.Text = "Введите имя csv файла";
             // 
             // pointsNumberTextBox
             // 
@@ -558,7 +542,7 @@
             this.messageBox.Multiline = true;
             this.messageBox.Name = "messageBox";
             this.messageBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.messageBox.Size = new System.Drawing.Size(219, 237);
+            this.messageBox.Size = new System.Drawing.Size(219, 276);
             this.messageBox.TabIndex = 17;
             // 
             // label1
@@ -567,9 +551,9 @@
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label1.Location = new System.Drawing.Point(5, 29);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(321, 16);
+            this.label1.Size = new System.Drawing.Size(187, 16);
             this.label1.TabIndex = 18;
-            this.label1.Text = "Выбери один из вариантов выбора точек";
+            this.label1.Text = "Варианты выбора точек";
             // 
             // label3
             // 
@@ -580,24 +564,33 @@
             this.label3.TabIndex = 19;
             this.label3.Text = "Сообщения об ошибках";
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label4.Location = new System.Drawing.Point(421, 29);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(139, 16);
+            this.label4.TabIndex = 20;
+            this.label4.Text = "Выбранный файл:";
+            // 
             // coverterProgramm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(727, 452);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.messageBox);
             this.Controls.Add(this.typeConverter);
             this.Controls.Add(this.csvNameStatusLabel);
             this.Controls.Add(this.pointsNumberStatusLabel);
-            this.Controls.Add(this.csvNameLabel);
             this.Controls.Add(this.beginCancelButton);
             this.Controls.Add(this.vtkStatusLabel);
             this.Controls.Add(this.progressPercentLabel);
             this.Controls.Add(this.progressStatusLabel);
             this.Controls.Add(this.progressNameLabel);
-            this.Controls.Add(this.csvNameTextBox);
             this.Controls.Add(this.converterProgressBar);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
@@ -618,13 +611,11 @@
         #endregion
 
         private System.Windows.Forms.ProgressBar converterProgressBar;
-        private System.Windows.Forms.TextBox csvNameTextBox;
         private System.Windows.Forms.Label progressNameLabel;
         private System.Windows.Forms.Label progressStatusLabel;
         private System.Windows.Forms.Label progressPercentLabel;
         private System.Windows.Forms.Label vtkStatusLabel;
         private System.Windows.Forms.Button beginCancelButton;
-        private System.Windows.Forms.Label csvNameLabel;
         private System.Windows.Forms.TextBox pointsNumberTextBox;
         private System.Windows.Forms.Label poinsNumberLabel;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
@@ -671,6 +662,8 @@
         private System.Windows.Forms.Button exConfigButton5;
         private System.Windows.Forms.Button exConfigButton3;
         private System.Windows.Forms.Button exConfigButton1;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog;
     }
 }
 

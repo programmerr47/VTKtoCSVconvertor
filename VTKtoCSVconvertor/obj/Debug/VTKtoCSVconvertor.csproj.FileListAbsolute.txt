@@ -9,3 +9,4 @@ C:\Users\Mikl\documents\visual studio 2012\Projects\testgit\VTKtoCSVconvertor\VT
 C:\Users\Mikl\documents\visual studio 2012\Projects\testgit\VTKtoCSVconvertor\VTKtoCSVconvertor\obj\Debug\VTKtoCSVconvertor.exe
 C:\Users\Mikl\documents\visual studio 2012\Projects\testgit\VTKtoCSVconvertor\VTKtoCSVconvertor\obj\Debug\VTKtoCSVconvertor.pdb
 C:\Users\Mikl\documents\visual studio 2012\Projects\testgit\VTKtoCSVconvertor\VTKtoCSVconvertor\obj\Debug\VTKtoCSVconvertor.AboutForm.resources
+C:\Users\Mikl\documents\visual studio 2012\Projects\testgit\VTKtoCSVconvertor\VTKtoCSVconvertor\obj\Debug\VTKtoCSVconvertor.OutputForm.resources

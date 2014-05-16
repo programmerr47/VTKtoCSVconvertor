@@ -11,6 +11,7 @@ namespace VTKtoCSVconvertor
 {
     class RectangleConverter : Converter
     {
+        public static String SUCCESS = "Конвертация успешно завершена";
         private static RectangleConverter instance;
 
         private int sourceFieldSizeX = -1;
@@ -220,7 +221,7 @@ namespace VTKtoCSVconvertor
             double progressStep = (100.0) / numberOfTargetPoints;
 
             StreamReader file = new StreamReader(path + "\\" + sourceName);
-            StreamWriter outFile = new StreamWriter(path + "\\" + targetName + ".csv");
+            StreamWriter outFile = new StreamWriter(outputPath);
 
             string line;
             string outLine = null;
